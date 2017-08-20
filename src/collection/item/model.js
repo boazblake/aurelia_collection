@@ -11,7 +11,6 @@ export const postTask = http => data =>
   new Task((rej, res) => post(http)(data).then(res, rej))
 
 export const toRequest = item =>{
-  console.log('item', item)
     let Dto =
       { firstName: item.firstName
       , lastName: item.lastName

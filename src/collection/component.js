@@ -14,48 +14,15 @@ export class Collection {
     this.style = 'style'
   }
 
-    canActivate(params, routeConfig, navigationInstruction) {
+  attached() {
+    const onError = error =>
+      log('ERROR')(error)
 
+    const onSuccess = data =>{
+      this._collection = data
     }
 
-    activate(params, routeConfig, navigationInstruction) {
-
-    }
-
-    created(owningView, myView) {
-
-    }
-
-    bind(bindingContext,overrideContext) {
-
-    }
-
-    attached() {
-      const onError = error =>
-        log('ERROR')(error)
-
-      const onSuccess = data =>{
-        this._collection = data
-        console.log( this._collection)
-      }
-
-      getCollectionTask(this.http).fork(onError, onSuccess)
-    }
-
-    canDeactivate() {
-
-    }
-
-    deactivate() {
-
-    }
-
-    detached() {
-
-    }
-
-    unbind() {
-
-    }
+    getCollectionTask(this.http).fork(onError, onSuccess)
+  }
 
 }

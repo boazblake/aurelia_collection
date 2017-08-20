@@ -22,20 +22,26 @@ export class Item {
   }
 
   activate(params, routeConfig, navigationInstruction) {
-    params ? this.id = params.id : this.id = null
+    if(params.id) {
+      this.state.id = params.id
+      this.load()
+    } else {
+      this.reset()
+      console.log(this)
+    }
   }
 
   attached() {
+  }
+
+  load() {
     const onError = E => log('ERROR')(E)
     const onSuccess = data => {
-      console.log(data)
       this.state.item = data
-      this.id
-      ? this.state.image = this.state.item.image
-      : this.state.item.image = this.state.image
+      this.state.image = this.state.item.image
     }
 
-    getItemTask(this.http)(this.id).fork(onError, onSuccess)
+    getItemTask(this.http)(this.state.id).fork(onError, onSuccess)
   }
 
   save() {
@@ -47,8 +53,8 @@ export class Item {
     const onSuccess = data =>
       log('data')(data)
 
-    this.id
-    ? editTask(this.http)(this.id)(this.state.item).fork(onError, onSuccess)
+    this.state.id
+    ? editTask(this.http)(this.state.id)(this.state.item).fork(onError, onSuccess)
     : addTask(this.http)(this.state.item).fork(onError, onSuccess)
   }
 
@@ -58,11 +64,22 @@ export class Item {
       log('data')(data)
       this.router.navigateToRoute('home.collection')
     }
-    deleteTask(this.http)(this.id).fork(onError, onSuccess)
+    deleteTask(this.http)(this.state.id).fork(onError, onSuccess)
   }
 
   image() {
 
+  }
+
+  reset() {
+    this.data = {}
+    this.state = {
+      item:
+        { firstName: ''
+        , lastName: ''
+        , image: 'https://ak2.picdn.net/shutterstock/videos/816607/thumb/1.jpg'
+        },
+    }
   }
 
 }

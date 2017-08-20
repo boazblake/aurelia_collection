@@ -18,6 +18,6 @@
       Last Modified: ${file.lastModifiedDate}
     </div>
 
-  <button if.bind="id" type="button" name="DELETE" click.delegate="delete()">X</button>
+  <button if.bind="state.id" type="button" name="DELETE" click.delegate="delete()">X</button>
   <button type="button" name="DELETE" click.delegate="save()">SAVE</button>
 </template>
