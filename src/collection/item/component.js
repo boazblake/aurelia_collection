@@ -1,24 +1,29 @@
 import { customElement, useView, inject } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
+import { AureliaConfiguration } from 'aurelia-configuration'
 import { Router } from 'aurelia-router'
 import { HttpClient } from 'aurelia-http-client'
-import { getItemTask, editTask, deleteTask, addTask } from './model'
+import { getItemTask, editTask, deleteTask, addTask, imgUploadTask } from './model'
 import { log } from 'utilities'
+import { map } from 'ramda'
+import { BlobToUrlValueConverter } from 'valueConverters'
 
 @customElement('item.edit')
 @useView('./view.html')
-@inject(HttpClient, EventAggregator, Router)
+@inject(HttpClient, EventAggregator, Router, AureliaConfiguration)
 export class Item {
-  constructor(http, emitter, router) {
+  constructor(http, emitter, router, config) {
     this.disposables = new Set()
     this.data = {}
     this.state = {
-      item: {},
-      image: 'https://ak2.picdn.net/shutterstock/videos/816607/thumb/1.jpg'
+      item: {
+      },
+      imgUpload: null
     }
     this.http = http
     this.emitter = emitter
     this.router = router
+    this.config = config
   }
 
   activate(params, routeConfig, navigationInstruction) {
@@ -27,7 +32,6 @@ export class Item {
       this.load()
     } else {
       this.reset()
-      console.log(this)
     }
   }
 
@@ -45,13 +49,17 @@ export class Item {
   }
 
   save() {
-    if (this.selectedFiles) {
-      createDto(this.state.item)(this.selectedFiles)
+    console.log(this.config.get('boaz'))
+    if (this.state.selectedFiles) {
+      const onError = e => log('e')(e)
+      const onSuccess = s => log('s')(s)
+      imgUploadTask(this.http)(this.config.get('api.boxAppSettings').clientID)(this.state.selectedFiles[0]).fork(onError, onSuccess)
+      this.state.item.image = ''
     }
-
+    return
     const onError = e => log('e')(e)
     const onSuccess = data =>
-      log('data')(data)
+      log('ITEM SAVED')(data)
 
     this.state.id
     ? editTask(this.http)(this.state.id)(this.state.item).fork(onError, onSuccess)
@@ -61,14 +69,10 @@ export class Item {
   delete() {
     const onError = e => log('e')(e)
     const onSuccess = data =>{
-      log('data')(data)
+      log('ITEM DELETED')(data)
       this.router.navigateToRoute('home.collection')
     }
     deleteTask(this.http)(this.state.id).fork(onError, onSuccess)
-  }
-
-  image() {
-
   }
 
   reset() {
@@ -78,7 +82,8 @@ export class Item {
         { firstName: ''
         , lastName: ''
         , image: 'https://ak2.picdn.net/shutterstock/videos/816607/thumb/1.jpg'
-        },
+        }
+        , imgUpload: null
     }
   }
 

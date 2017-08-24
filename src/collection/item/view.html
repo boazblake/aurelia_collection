@@ -11,11 +11,12 @@
 
   <img src="${state.item.image}" click.delegate="image()">
 
-  <input type="file" accept="image/*" files.bind="selectedFiles">
-    <div repeat.for="file of selectedFiles | fileListToArray">
-      <h1>${file.name}: ${file.type} ${file.size / 1000} kb</h1>
-      <img src.bind="file | blobToUrl" max-width="20%"><img>
-      Last Modified: ${file.lastModifiedDate}
+  <input type="file" accept="image/*" files.bind="state.selectedFiles">
+    <div repeat.for="file of state.selectedFiles | fileListToArray">
+        <label for="lastName">IMAGE NAME</label>
+        <input type="text" name="lastName" value.bind="file.name">${file.size / 1000} kb
+        <p>Last Modified: ${file.lastModifiedDate}</p>
+      <img id="file-upload" src.bind="file | blobToUrl" width="40%"><img>
     </div>
 
   <button if.bind="state.id" type="button" name="DELETE" click.delegate="delete()">X</button>

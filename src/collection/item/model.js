@@ -53,3 +53,27 @@ export const removeTask = http => id =>
 
 export const deleteTask =
   compose( map(map(identity(dto => JSON.parse(dto.response)))), removeTask)
+
+  // ==== IMGUR ==================================================================
+
+
+  // ==== IMGUR ==================================================================
+export const upload = http => api => b64Dto =>
+  http.post('https://api.box.com/2.0/folders/0', {Authorization: api, data:b64Dto})
+
+export const uploadTask = http => api => b64Dto =>
+  new Task(( rej, res) => upload(http)(api)(b64Dto).then(res, rej))
+
+export const toBlob = blob => {
+  const reader = new FileReader()
+  let b64Dto = null
+  reader.readAsDataURL(blob)
+  reader.onloadend = () =>{
+    b64Dto = reader.result
+  }
+  console.log(b64Dto)
+  return b64Dto
+}
+
+export const imgUploadTask = http => api =>
+  compose(uploadTask(http)(api),toBlob)
