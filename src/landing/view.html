@@ -4,11 +4,13 @@
     <fieldset>
       <label for="email">E-mail</label>
       <input type="text" value.bind="_user.email" placeholder="Email">
+      <span show.bind="errors.email">NEED TO ENTER EMAIL</span>
     </fieldset>
 
     <fieldset>
       <label for="password">Password</label>
       <input type="password" value.bind="_user.password" placeholder="Password">
+      <span show.bind="errors.password">NEED TO ENTER PASSWORD</span>
     </fieldset>
 
     <button  click.delegate="register()">REGISTER</button>

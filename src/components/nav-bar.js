@@ -12,20 +12,29 @@ export class NavBar {
     this.http = http
   }
 
-  attached() {
+  bind() {
     const handler = authStatus =>{
       this.authStatus = authStatus
     }
 
-    this.emitter.subscribe('auth', handler )
+    this.emitter.subscribe('auth-channel', handler )
+
+    checkAuth()
+    ? this.emitter.publish('auth-channel', true )
+    : this.emitter.publish('auth-channel', false )
   }
 
+  authStatusChanged(newvalue, oldvalue) {
+    console.log(`new value: ${newValue} old value: ${oldValue}`)
+  }
 
 
   logout(){
     Promise.resolve(this.http.get("http://localhost:8080/auth/logout")).then(() => {
       localStorage.removeItem('userId')
-      if( !checkAuth() ) this.emitter.publish('auth', false )
+      if( !checkAuth() ) this.emitter.publish('auth-channel', false )
+      this.router.navigateToRoute('home')
+
     })
   }
 }

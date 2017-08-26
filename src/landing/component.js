@@ -1,19 +1,21 @@
 import { customElement, useView, inject } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { HttpClient, json } from 'aurelia-http-client'
+import { Router } from 'aurelia-router'
 import { checkAuth } from 'authConfig'
 import { userModel, registerTask, loginTask } from './model'
 import { map } from 'ramda'
 
 @customElement('landing')
 @useView('./view.html')
-@inject(HttpClient, EventAggregator)
+@inject(HttpClient, EventAggregator, Router)
 export class Landing {
-  constructor(http, emitter) {
+  constructor(http, emitter, router) {
     this.disposables = new Set()
     this._user = {}
     this.state = {}
     this.http = http
+    this.router = router
     this.emitter = emitter
     this.style = 'style'
   }
@@ -26,7 +28,8 @@ export class Landing {
 
     const onSuccess = data => {
       localStorage.setItem('userId', JSON.stringify(data.userId))
-      if ( checkAuth() ) this.emitter.publish('auth', true)
+      if ( checkAuth() ) this.emitter.publish('auth-channel', true)
+      this.router.navigateToRoute('home.collection', {})
     }
 
 

@@ -5,14 +5,14 @@ const routes =
   [ { route: 'landing'
     , name: 'home.landing'
     , moduleId: 'landing/component'
-    , nav: true
+    , nav: false
     , title: 'landing'
     , settings: { roles: [] }
     }
   , { route: 'collection'
     , name: 'home.collection'
     , moduleId: 'collection/component'
-    , nav: true
+    , nav: false
     , title: 'collection'
     , settings: { roles: ['auth'] }
     }

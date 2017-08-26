@@ -49,14 +49,13 @@ export class Item {
   }
 
   save() {
-    console.log(this.config.get('boaz'))
     if (this.state.selectedFiles) {
       const onError = e => log('e')(e)
       const onSuccess = s => log('s')(s)
-      imgUploadTask(this.http)(this.config.get('api.boxAppSettings').clientID)(this.state.selectedFiles[0]).fork(onError, onSuccess)
+      imgUploadTask(this.http)(this.state.selectedFiles[0]).fork(onError, onSuccess)
       this.state.item.image = ''
     }
-    return
+
     const onError = e => log('e')(e)
     const onSuccess = data =>
       log('ITEM SAVED')(data)
