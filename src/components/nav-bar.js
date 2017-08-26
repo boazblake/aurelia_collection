@@ -2,6 +2,7 @@ import { useView, inject, bindable } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client'
 import { checkAuth } from 'authConfig'
 import { EventAggregator } from 'aurelia-event-aggregator'
+import styles from './styles.css'
 
 @inject(HttpClient, EventAggregator)
 export class NavBar {
@@ -10,6 +11,7 @@ export class NavBar {
     this.emitter = emitter
     this.authStatus = false
     this.http = http
+    this.styles = styles
   }
 
   bind() {

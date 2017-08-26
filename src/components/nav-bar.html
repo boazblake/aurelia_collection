@@ -1,5 +1,6 @@
 <template bindable="router" >
   <require from="material-design-lite/material.css"></require>
+  <require from="./styles.css"></require>
 
   <nav class="navbar navbar-default navbar-fixed-top" id="navbar" role="navigation" >
     <div class="navbar-header">
@@ -10,7 +11,7 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" route-href="route: home.collection">
-        <img src="https://cdn.auth0.com/blog/aurelia-logo.png" class="navbar-logo" alt="">
+        <i show.bind="router.currentInstruction.config.name !== 'home.collection'" style={styles.home-button} class="fa fa-undo" aria-hidden="true" class="navbar-logo" ></i>
         <span>${router.title}</span>
       </a>
     </div>
@@ -18,16 +19,15 @@
     <div class="collapse navbar-collapse" id="skeleton-navigation-navbar-collapse" >
       <div class="authed" show.bind="authStatus">
         <ul class="nav navbar-nav">
-          <li repeat.for="route of router.navigation" class="${route.isActive ? 'active' : ''}">
-            <a class="mdl-button mdl-js-button mdl-button--primary" data-toggle="collapse"
+          <li repeat.for="route of router.navigation" class="${route.isActive ? 'active' : ''} ">
+            <a class="mdl-list__item-primary-content" data-toggle="collapse"
             data-target="#skeleton-navigation-navbar-collapse.in" href.bind="route.href">${route.title}</a>
           </li>
         </ul>
       </div>
-      
 
       <ul class="nav navbar-nav navbar-right">
-        <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" click.delegate="logout()">LOGOUT</a>
+        <a show.bind="authStatus" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" click.delegate="logout()">LOGOUT</a>
         <li class="loader" if.bind="router.isNavigating">
           <i class="fa fa-spinner fa-spin fa-2x"></i>
         </li>
@@ -36,4 +36,3 @@
     </div>
   </nav>
 </template>
-
