@@ -1,4 +1,6 @@
 <template bindable="router" >
+  <require from="material-design-lite/material.css"></require>
+
   <nav class="navbar navbar-default navbar-fixed-top" id="navbar" role="navigation" >
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse">
@@ -16,7 +18,6 @@
     <div class="collapse navbar-collapse" id="skeleton-navigation-navbar-collapse" >
       <div class="authed" show.bind="authStatus">
         <ul class="nav navbar-nav">
-          <button click.delegate="logout()">LOGOUT</button>
           <li repeat.for="route of router.navigation" class="${route.isActive ? 'active' : ''}">
             <a class="mdl-button mdl-js-button mdl-button--primary" data-toggle="collapse"
             data-target="#skeleton-navigation-navbar-collapse.in" href.bind="route.href">${route.title}</a>
@@ -25,6 +26,7 @@
       </div>
 
       <ul class="nav navbar-nav navbar-right">
+        <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" click.delegate="logout()">LOGOUT</a>
         <li class="loader" if.bind="router.isNavigating">
           <i class="fa fa-spinner fa-spin fa-2x"></i>
         </li>
@@ -33,3 +35,4 @@
     </div>
   </nav>
 </template>
+

@@ -1,20 +1,29 @@
 <template>
+    <require from="material-design-lite/material.css"></require>
 
+<div class="au-animate">
   <form role="form">
-    <fieldset>
-      <label for="email">E-mail</label>
-      <input type="text" value.bind="_user.email" placeholder="Email">
-      <span show.bind="errors.email">NEED TO ENTER EMAIL</span>
-    </fieldset>
 
-    <fieldset>
-      <label for="password">Password</label>
-      <input type="password" value.bind="_user.password" placeholder="Password">
-      <span show.bind="errors.password">NEED TO ENTER PASSWORD</span>
-    </fieldset>
+    <div class="mdl-textfield mdl-js-textfield">
+      <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <label class="mdl-textfield__label" for="email">Email</label>
+        <input class="mdl-textfield__input" style="outline: none;" type="text" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" value.bind="_user.email" name="email">
+        <span class="mdl-textfield__error" show.bind="errors.email">Input is not a valid email!</span>
+      </fieldset>
+    </div>
+<br>
+    <div class="mdl-textfield mdl-js-textfield">
+      <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <label class="mdl-textfield__label" for="Password">Password</label>
+        <input class="mdl-textfield__input" style="outline: none;" type="password" value.bind="_user.password" name="password">
+        <span class="mdl-textfield__error" show.bind="errors.password">Input is not a valid password!</span>
+      </fieldset>
+    </div>
 
-    <button  click.delegate="register()">REGISTER</button>
-    <button  click.delegate="login()">LOGIN</button>
+    <div class="actions">
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" click.delegate="register()">REGISTER</button>
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" click.delegate="login()">LOGIN</button>
+    </div>
   </form>
-
+</div>
 </template>

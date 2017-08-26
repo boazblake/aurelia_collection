@@ -1,7 +1,11 @@
 <template >
-  <div class="container">
+  <require from="material-design-lite/material.css"></require>
+
+  <div class="mdl-list au-animate">
     <div repeat.for="item of _collection" class="collection.item">
-      <a class="mdl-button mdl-js-button mdl-button--primary" route-href="route:item.edit; params.bind:{id:item._id}" >${item.firstName} ${item.lastName}</a>
+      <span class="mdl-list__item mdl-button mdl-js-button mdl-button--primary">
+        <a class="mdl-list__item-primary-content" route-href="route:item.edit; params.bind:{id:item._id}" >${item.firstName} ${item.lastName}</a>
+        </span>
     </div>
   </div>
 </template>

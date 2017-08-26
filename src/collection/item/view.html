@@ -1,24 +1,41 @@
-<template>
-  <fieldset>
-    <label for="firstName">firstName</label>
-    <input type="text" name="firstName" value.bind="state.item.firstName" >
-  </fieldset>
+<template >
+  <require from="material-design-lite/material.css"></require>
 
-  <fieldset>
-    <label for="lastName">lastName</label>
-    <input type="text" name="lastName" value.bind="state.item.lastName">
-  </fieldset>
-
-  <img src="${state.item.image}" click.delegate="image()">
-
-  <input type="file" accept="image/*" files.bind="state.selectedFiles">
-    <div repeat.for="file of state.selectedFiles | fileListToArray">
-        <label for="lastName">IMAGE NAME</label>
-        <input type="text" name="lastName" value.bind="file.name">${file.size / 1000} kb
-        <p>Last Modified: ${file.lastModifiedDate}</p>
-      <img id="file-upload" src.bind="file | blobToUrl" width="40%"><img>
+  <div class="au-animate">
+    <div class="mdl-textfield mdl-js-textfield">
+      <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <label class="mdl-textfield__label" for="firstName" show.bind="!state.item.firstName">First Name</label>
+        <input class="mdl-textfield__input" style="outline: none;" type="text" name="firstName" value.bind="state.item.firstName">
+      </fieldset>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield">
+      <fieldset class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <label class="mdl-textfield__label" for="lastName" show.bind="!state.item.lastName">Last Name</label>
+        <input class="mdl-textfield__input" style="outline: none;" type="text" name="lastName" value.bind="state.item.lastName">
+      </fieldset>
     </div>
 
-  <button if.bind="state.id" type="button" name="DELETE" click.delegate="delete()">X</button>
-  <button type="button" name="DELETE" click.delegate="save()">SAVE</button>
+    <img src="${state.item.image}" click.delegate="image()">
+
+
+
+
+   <div class="mdl-textfield mdl-js-textfield mdl-textfield--file">
+
+    <input class="mdl-textfield__input" type="file" accept="image/*" files.bind="state.selectedFiles">
+      <div repeat.for="file of state.selectedFiles | fileListToArray">
+
+          <label class="mdl-textfield__label" for="file" show.bind="file">IMAGE NAME</label>
+          <input class="mdl-textfield__input" type="text" name="file" value.bind="file.name">${file.size / 1000} kb
+          <p>Last Modified: ${file.lastModifiedDate}</p>
+        <img id="file-upload" src.bind="file | blobToUrl" width="40%"><img>
+      </div>
+    </div>
+
+    <button if.bind="state.id" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" name="DELETE" click.delegate="delete()">
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+    </button>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="button" name="DELETE" click.delegate="save()">SAVE</button>
+  </div>
 </template>
+
