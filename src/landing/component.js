@@ -24,7 +24,7 @@ export class Landing {
     this.user = userModel(this._user)
 
     const onError = error =>
-      console.log('ERROR', error)
+      log('ERROR')(error)
 
     const onSuccess = data => {
       localStorage.setItem('userId', JSON.stringify(data.userId))
@@ -40,14 +40,14 @@ export class Landing {
     this.user = userModel(this._user)
 
     const onError = error =>
-      console.log('ERROR', error)
+      log('ERROR')(error)
 
     const onSuccess = data => {
       localStorage.setItem('userId', JSON.stringify(data.userId))
-      console.log('SUCESS', data)
+      log('success')(data)
     }
 
-    console.log(this.user)
+    log(this.user)
 
     registerTask(this.http)(this.user).fork(onError, onSuccess)
   }

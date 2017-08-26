@@ -24,11 +24,6 @@ export class NavBar {
     : this.emitter.publish('auth-channel', false )
   }
 
-  authStatusChanged(newvalue, oldvalue) {
-    console.log(`new value: ${newValue} old value: ${oldValue}`)
-  }
-
-
   logout(){
     Promise.resolve(this.http.get("http://localhost:8080/auth/logout")).then(() => {
       localStorage.removeItem('userId')
